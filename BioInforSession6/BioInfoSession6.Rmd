@@ -1,6 +1,6 @@
 ---
 title: "BioInforSession6"
-output: html_document
+output: github_document
 ---
 #MORE ON PCA!!! PRINCIPAL COMPONENT ANALYSIS!!! LOOK AT SESSION 5 AND NOTES FOR 10-25-19
 ```{r setup, include=FALSE}
@@ -17,14 +17,14 @@ head(wisc.df)
 
 ### DANG THIS DATA IS A LOT!!! WHAT DO I DO!!! how do I examine data from so many patients with so many results!!! 
 
-Here we examine `r nrow(wisc_df)` patient samples #this gives us the number of patients when opening the data somehow
+Here we examine r nrow(wisc_df) patient samples #this gives us the number of patients when opening the data somehow
 
 ```{r}
 table(wisc.df$diagnosis) #giving us the types of diagnosis 
 ```
-in this data-set we have `r x["M"]` cancer and `r["B"]` non-cancer patients
+in this data-set we have r x["M"] cancer and r["B"] non-cancer patients
 ##
-in this data-set we have `rx["_mean"]` columns 
+in this data-set we have rx["_mean"]` columns 
 
 
 ### we dont want ID or diagnosis or thelast column, X. so we are only going to use columns 3 to 32 3:32
