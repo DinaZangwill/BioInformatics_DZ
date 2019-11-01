@@ -1,0 +1,58 @@
+---
+title: "BioInforSession5"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdowntmp 
+
+```{r}
+# Generate some example data for clustering
+tmp <- c(rnorm(30,-3), rnorm(30,3))
+x <- cbind(x=tmp, y=rev(tmp))
+plot(x)
+```
+
+```{r}
+### use kmeans() setting k to 2 nstart to 20 to answer some questions about the above graph
+#Use the kmeans() function setting k to 2 and nstart=20
+#Inspect/print the results
+#Q. How many points are in each cluster?
+#Q. What ‘component’ of your result object details
+ #- cluster size?
+ #- cluster assignment/membership?
+ #- cluster center?
+#Plot x colored by the kmeans cluster assignment and
+ #add cluster centers as blue points
+k<-kmeans(x,centers=2,nstart=20)
+
+```
+```{r}
+k
+```
+# you can see the availble components of which there are 9
+#how to call up components is k$component 
+```{r}
+#Q. How many points are in each cluster?
+k$size
+#this returns [1] 30 30. this means 30 points in each cluster 
+#Q. What ‘component’ of your result object details
+ #- cluster size?
+ ###i think it's k$size? is this a trick? it's 30???
+table(k$cluster) ## 30 1s and 30 2s
+ #- cluster assignment/membership?
+
+ #- cluster center?
+```
+# now let's:
+```{r}
+#Plot x colored by the kmeans cluster assignment and
+ #add cluster centers as blue points
+kmeans(x, centers=2, nstart=20)
+plot(x, col=k$cluster) #col=k$cluster will color the clusters
+points(k$centers, col="blue", pch=15) #we did pch=15 to really make the centers stand out
+```
+

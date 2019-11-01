@@ -1,0 +1,115 @@
+---
+title: "Session5_Hierarchicalclusters"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#Hierarchical clustering 
+#we dont know the number of clusters ahead of time 
+#can be bottom-up or top-down
+#more flexible than k-means
+```{r}
+#we need the x again
+tmp <- c(rnorm(30,-3), rnorm(30,3))
+x <- cbind(x=tmp, y=rev(tmp))
+plot(x)
+```
+```{r}
+##so first let's try this
+hc<-hclust(dist(x))
+hc ###ehhh that's not helpful but lets plot is
+plot(hc) ##look at the numbers and how they are organized
+#they are 30 and below (left) and above 30 (right) 
+## draw a line on the tree using abline
+abline(h=6, col="red")
+abline(h=4, col="blue")
+cutree(hc, k=6)
+cutree(hc, k=4)
+
+```
+```{r}
+## you can also cut trees to yield a given k groups/clusters
+grps<-cutree(hc, k=2)
+table(grps)
+```
+
+```{r}
+# First we need to calculate point (dis)similarity
+# as the Euclidean distance between observations
+dist_matrix <- dist(x)
+##let's investigate this new thing
+```
+
+
+```{r}
+# First we need to calculate point (dis)similarity
+# as the Euclidean distance between observations
+dist_matrix <- dist(x)
+```
+
+
+```{r}
+# The hclust() function returns a hierarchical
+# clustering model
+hc_2 <- hclust(d = dist_matrix)
+# the print method is not so useful here
+hc_2
+#Call:
+#hclust(d = dist_matrix)
+#Cluster method : complete
+#Distance : euclidean
+#Number of objects: 60 
+```
+
+## how to we link clusters in hierclusters?
+##aka: how is distance between clusters determined? FOUR MAIN METHODS
+### complete
+#### pairwise similarity between all observations in clusters 1 and 2, uses largest of similarties
+### single
+#### uses smallest of similarities 
+### average
+#### uses average of similarities
+### centroid 
+#### finds the centroid for each cluster and uses similarity between those
+### so how to do this in R
+```{r}
+# Using different hierarchical clustering methods
+hc.complete <- hclust(d, method="complete")
+hc.average <- hclust(d, method="average")
+hc.single <- hclust(d, method="single")
+### d doesn't exist so lol this does shit right now it's just a format
+```
+### MY TURN!!! 
+```{r}
+# Step 1. Generate some example data for clustering
+m <- rbind(
+ matrix(rnorm(100, mean=0, sd = 0.3), ncol = 2), # c1
+ matrix(rnorm(100, mean = 1, sd = 0.3), ncol = 2), # c2
+ matrix(c(rnorm(50, mean = 1, sd = 0.3), # c3
+ rnorm(50, mean = 0, sd = 0.3)), ncol = 2))
+colnames(m) <- c("x", "y")
+# Step 2. Plot the data without clustering
+plot(m)
+# Step 3. Generate colors for known clusters
+# (just so we can compare to hclust results)
+col <- as.factor( rep(c("c1","c2","c3"), each=50) )
+plot(m, col=col)
+```
+
+```{r}
+#Q. Use the dist(), hclust(), plot() and cutree() functions to return 2 and 3 clusters
+#Q. How does this compare to your known 'col' groups?
+dist(m)
+hc_myturn<-hclust(dist(m))
+plot(hc_myturn)
+abline(h=2.75, col="red")
+grps_m2<- cutree(hc_myturn, k=2) ## for two groups
+plot(m, col=grps_m2)
+###now three groups
+grps_m3<- cutree(hc_myturn, k=3)
+plot(m, col=grps_m3)
+```
+
